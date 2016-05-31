@@ -35,7 +35,7 @@ a:active{
     color: black;
 }
 body{
-  background-image: linear-gradient(#0153B7, #14D2CF);
+  background-image: linear-gradient(#0153B7, #14D2CF) fixed;
   font-family: 'scratchFont', sans-serif;
   text-align: center;
   position: absolute;
