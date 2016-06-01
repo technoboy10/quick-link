@@ -16,13 +16,15 @@ var curators = ["Paddle2See*","jbuitrago0510*", "technoboy10*", "natalie*", "cee
 var count = 0;
 function getUnread(page){
   var commentList;
+  var ownerList;
+  var curatorList;
   var topList;
   //Grab comments
-  var xml = new XMLHttpRequest();
-  xml.onreadystatechange = function(){
-    if (xml.readyState = 4){
+  var commentReq = new XMLHttpRequest();
+  commentReq.onreadystatechange = function(){
+    if (commentReq.readyState = 4){
       var container = document.implementation.createHTMLDocument().documentElement;
-      container.innerHTML = xml.responseText;
+      container.innerHTML = commentReq.responseText;
       commentList = Array.from(container.querySelectorAll('.top-level-reply')).reverse().filter( //Get only comments with links in them
         function(comment){
           var c = comment.querySelector(".comment > .info > .content");
@@ -38,8 +40,42 @@ function getUnread(page){
 
     }
   }
-  xml.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
-  xml.send(null);
+  commentReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
+  commentReq.send(null);
+
+  var curatorReq = new XMLHttpRequest();
+  curatorReq.onreadystatechange = function(){
+    if (curatorReq.readyState = 4){
+      var container = document.implementation.createHTMLDocument().documentElement;
+      container.innerHTML = curatorReq.responseText;
+      curatorList = Array.from(container.querySelectorAll('li > .avatar')).map(
+        function(person){
+          return person.getAttribute('data-id');
+        }
+      )
+    }
+  }
+  curatorReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , false);
+  curatorReq.send(null);
+
+  var ownerReq = new XMLHttpRequest();
+  ownerReq.onreadystatechange = function(){
+    if (ownerReq.readyState = 4){
+      var container = document.implementation.createHTMLDocument().documentElement;
+      container.innerHTML = ownerReq.responseText;
+      ownerList = Array.from(container.querySelectorAll('li > .avatar')).map(
+        function(person){
+          return person.getAttribute('data-id');
+        }
+      )
+    }
+  }
+  ownerReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
+  ownerReq.send(null);
+
+  curators = ownerList + curatorList;
+
+  //document.querySelectorAll('li > .avatar')[0].getAttribute('data-id')
 
   //Parse through array
   var tempCount = commentList.length;
