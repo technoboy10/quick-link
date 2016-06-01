@@ -120,7 +120,7 @@ function getCurators(){
 function nextLink(){
   var previousLink;
   var link = true;
-  var page = 2;
+  var page = 5;
   count = 0;
   getCurators();
   while (link){
