@@ -12,7 +12,7 @@ if (request.status === 200) {
   console.log("ERROR");
 }*/
 
-var curators = ["Paddle2See*","jbuitrago0510*", "technoboy10*", "natalie*", "ceebee*", "speakvisually*", "cartoonnetwork", "The_Grits", "4LeafClovR", "puppymk", "Malik44", "CrazyNimbus", "fmtfmtfmt2", "GreenIeaf", "st19_galla", "joletole", "Hamish752", "Abstract-", "getbent"];
+var curators;
 var count = 0;
 function getUnread(page){
   var commentList;
@@ -43,37 +43,6 @@ function getUnread(page){
   commentReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
   commentReq.send(null);
 
-  var curatorReq = new XMLHttpRequest();
-  curatorReq.onreadystatechange = function(){
-    if (curatorReq.readyState = 4){
-      var container = document.implementation.createHTMLDocument().documentElement;
-      container.innerHTML = curatorReq.responseText;
-      curatorList = Array.from(container.querySelectorAll('li > .avatar')).map(
-        function(person){
-          return person.getAttribute('data-id');
-        }
-      )
-    }
-  }
-  curatorReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , false);
-  curatorReq.send(null);
-
-  var ownerReq = new XMLHttpRequest();
-  ownerReq.onreadystatechange = function(){
-    if (ownerReq.readyState = 4){
-      var container = document.implementation.createHTMLDocument().documentElement;
-      container.innerHTML = ownerReq.responseText;
-      ownerList = Array.from(container.querySelectorAll('li > .avatar')).map(
-        function(person){
-          return person.getAttribute('data-id');
-        }
-      )
-    }
-  }
-  ownerReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
-  ownerReq.send(null);
-
-  curators = ownerList + curatorList;
 
   //document.querySelectorAll('li > .avatar')[0].getAttribute('data-id')
 
@@ -114,11 +83,47 @@ function changecount(count){
 
 }
 
+function getCurators(){
+    var curatorReq = new XMLHttpRequest();
+    curatorReq.onreadystatechange = function(){
+      if (curatorReq.readyState = 4){
+        var container = document.implementation.createHTMLDocument().documentElement;
+        container.innerHTML = curatorReq.responseText;
+        curatorList = Array.from(container.querySelectorAll('li > .avatar > .title > a')).map(
+          function(person){
+            return person.innerHTML;
+          }
+        )
+      }
+    }
+    curatorReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , false);
+    curatorReq.send(null);
+
+    var ownerReq = new XMLHttpRequest();
+    ownerReq.onreadystatechange = function(){
+      if (ownerReq.readyState = 4){
+        var container = document.implementation.createHTMLDocument().documentElement;
+        container.innerHTML = ownerReq.responseText;
+        ownerList = Array.from(container.querySelectorAll('li > .avatar > .title > a')).map(
+          function(person){
+            return person.innerHTML;
+          }
+        )
+      }
+    }
+    ownerReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
+    ownerReq.send(null);
+
+    curators = ownerList.concat(curatorList);
+    console.log(curators);
+}
+
 function nextLink(){
   var previousLink;
   var link = true;
   var page = 1;
   count = 0;
+  getCurators();
   while (link){
     previousLink = link;
     link = getUnread(page);
