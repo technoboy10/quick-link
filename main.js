@@ -43,7 +43,6 @@ function getUnread(page){
   commentReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
   commentReq.send(null);
 
-
   //document.querySelectorAll('li > .avatar')[0].getAttribute('data-id')
 
   //Parse through array
