@@ -43,7 +43,7 @@ function getUnread(page){
   commentReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
   commentReq.send(null);
 
-  var curatorReq = new XMLHttpRequest();
+  /*var curatorReq = new XMLHttpRequest();
   curatorReq.onreadystatechange = function(){
     if (curatorReq.readyState = 4){
       var container = document.implementation.createHTMLDocument().documentElement;
@@ -73,7 +73,7 @@ function getUnread(page){
   ownerReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
   ownerReq.send(null);
 
-  curators = ownerList + curatorList;
+  curators = ownerList + curatorList;*/
 
   //document.querySelectorAll('li > .avatar')[0].getAttribute('data-id')
 
