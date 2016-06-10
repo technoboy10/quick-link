@@ -40,7 +40,7 @@ function getUnread(page){
 
     }
   }
-  commentReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
+  commentReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
   commentReq.send(null);
 
   //document.querySelectorAll('li > .avatar')[0].getAttribute('data-id')
@@ -95,7 +95,7 @@ function getCurators(){
         )
       }
     }
-    curatorReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , false);
+    curatorReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , false);
     curatorReq.send(null);
 
     var ownerReq = new XMLHttpRequest();
@@ -110,7 +110,7 @@ function getCurators(){
         )
       }
     }
-    ownerReq.open("GET", "https://edu.crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
+    ownerReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
     ownerReq.send(null);
 
     curators = ownerList.concat(curatorList);
