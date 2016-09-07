@@ -1,5 +1,5 @@
 var studioid = 146521;
-var curators = ["gobo","scmb1*","P110","LiFaytheGoblin*","cheddargirl*","ricarose*","EH7meow","dolphingirl36","CrazyNimbus","ZaharaMar","Really_A","chacharosie8888","Hamish752","amateurradiogeek15","Denciethepenguin"];
+var curators = ["gobo","scmb1*","P110","LiFaytheGoblin*","cheddargirl*","ricarose*","EH7meow","dolphingirl36","CrazyNimbus","Really_A","chacharosie8888","Hamish752","amateurradiogeek15","Denciethepenguin","-Cherri-","Abstract-","ItchyCatIII"];
 var count = 0;
 function getUnread(page){
   var commentList;
@@ -60,7 +60,7 @@ function changeLink(link){
 }
 
 function changecount(count){
-  document.getElementById("projectcount").innerHTML = count + " projects left review or add to the spreadsheet!";
+  document.getElementById("projectcount").innerHTML = count + " projects left to review or add to the spreadsheet!";
 
 }
 
