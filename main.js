@@ -94,11 +94,10 @@ function getCurators(){
         )
       }
     curatorReq.send();
-    }
 
     var ownerReq = new XMLHttpRequest();
-    ownerReq.onreadystatechange = function(){
-      if (ownerReq.readyState = 4){
+    ownerReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , true);
+    ownerReq.onload = function () {
         var container = document.implementation.createHTMLDocument().documentElement;
         container.innerHTML = ownerReq.responseText;
         ownerList = Array.from(container.querySelectorAll('li > .avatar > .title > a')).map(
@@ -107,10 +106,7 @@ function getCurators(){
           }
         )
       }
-    }
-    ownerReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/users/owners-in/" + studioid + "/1/" , false);
-    ownerReq.setRequestHeader("Origin","https://technoboy10.tk");
-    ownerReq.send(null);
+    ownerReq.send();
 
     curators = ownerList.concat(curatorList);
     console.log(curators);
