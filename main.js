@@ -105,10 +105,9 @@ function getCurators(){
             return person.innerHTML;
           }
         )
+        curators = ownerList.concat(curatorList);
       }
     ownerReq.send();
-
-    curators = ownerList.concat(curatorList);
     console.log(curators);
 }
 
