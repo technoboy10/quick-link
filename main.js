@@ -40,7 +40,7 @@ function getUnread(page){
 
     }
   }
-  commentReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , false);
+  commentReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/comments/gallery/" + studioid + "/?page=" + page , true);
   commentReq.setRequestHeader("Origin","https://technoboy10.tk");
   commentReq.send(null);
 
@@ -83,9 +83,9 @@ function changecount(count){
 
 function getCurators(){
     var curatorReq = new XMLHttpRequest();
-    curatorReq.onreadystatechange = function(){
-      if (curatorReq.readyState = 4){
-        var container = document.implementation.createHTMLDocument().documentElement;
+    curatorReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , true);
+    curatorReq.onload = function () {
+      var container = document.implementation.createHTMLDocument().documentElement;
         container.innerHTML = curatorReq.responseText;
         curatorList = Array.from(container.querySelectorAll('li > .avatar > .title > a')).map(
           function(person){
@@ -93,10 +93,8 @@ function getCurators(){
           }
         )
       }
+    curatorReq.send();
     }
-    curatorReq.open("GET", "https://crossorigin.me/https://scratch.mit.edu/site-api/users/curators-in/" + studioid + "/1/" , false);
-    curatorReq.setRequestHeader("Origin","https://technoboy10.tk");
-    curatorReq.send(null);
 
     var ownerReq = new XMLHttpRequest();
     ownerReq.onreadystatechange = function(){
