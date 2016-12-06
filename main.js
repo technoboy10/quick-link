@@ -1,4 +1,17 @@
 var studioid = 146521;
+
+var request = new XMLHttpRequest();
+request.open('GET', 'https://api.scratch.mit.edu/proxy/featured', false);  // `false` makes the request synchronous
+request.send(null);
+
+if (request.status === 200) {
+  studioid = JSON.parse(request.responseText).scratch_welcoming_committee[0].gallery_id;
+  console.log('found latest studio');
+} else {
+  studioid = 0;
+  console.log("ERROR");
+}
+
 var curators = ["gobo","scmb1*","P110","LiFaytheGoblin*","cheddargirl*","ricarose*","EH7meow","dolphingirl36","CrazyNimbus","Really_A","chacharosie8888","Hamish752","amateurradiogeek15","Denciethepenguin","-Cherri-","Abstract-","ItchyCatIII"];
 var count = 0;
 function getUnread(page){
@@ -29,9 +42,9 @@ function getUnread(page){
   xml.send(null);
 
   //Parse through array
-  var tempCount = commentList.length;
+  var tempCount = 5000; //replace with commentList.length if studio doesn't have so many comments (all 5000)
   var lastReply = -1;
-  for (i = 0; i < commentList.length; i++){
+  for (i = 0; i < 5000; i++){
     var replyList = commentList[i].querySelectorAll('.reply > .comment'); //Get all comments
     for (j = 0; j < replyList.length; j++){ //go through replies
       if(curators.indexOf(replyList[j].querySelector(".info > .name > a").innerHTML) != -1){ //pick comment by a curator
@@ -42,7 +55,7 @@ function getUnread(page){
       }
     }
   }
-  if (lastReply == commentList.length-1){
+  if (lastReply == 4999){
     return false; //All comments on page have been checked, so this should return the first comment of the next page (commentList[0]) if the next page *isn't* done
   } else {
     count += tempCount;
